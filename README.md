@@ -3,24 +3,24 @@
 Add to setup.cs file
 
 ```csharp
-public sealed class Startup : SwisschainStartup<AppConfig>
-    {
-        public Startup(IConfiguration configuration)
-            : base(configuration)
-        {
-        }
+	public sealed class Startup : SwisschainStartup<AppConfig>
+	{
+		public Startup(IConfiguration configuration)
+		    : base(configuration)
+		{
+		}
 
-        protected override void ConfigureExt(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+		protected override void ConfigureExt(IApplicationBuilder app, IWebHostEnvironment env)
+		{
 			app.UseMetricServer();
-        }
-    }
+		}
+	}
 ```
 
 Create metric
 
 ```csharp
-	public static class InternalMetrics
+    public static class InternalMetrics
     {
         public static readonly Counter QuoteInCount = Metrics
             .CreateCounter("quote_in_count",
@@ -55,4 +55,24 @@ timer usage
  {
  	 // ....
  }
+```
+
+
+# Grpc service traker
+
+```
+
+	public sealed class Startup : SwisschainStartup<AppConfig>
+	{
+		public Startup(IConfiguration configuration)
+		    : base(configuration)
+		{
+		}
+
+		protected override void ConfigureGrpcServiceOptions(GrpcServiceOptions options)
+		{
+		    options.Interceptors.Add<PrometheusMetricsInterceptor>();
+		}
+	}
+
 ```

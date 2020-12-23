@@ -1,7 +1,10 @@
-﻿namespace Swisschain.Sdk.Metrics
+﻿using Prometheus;
+
+namespace Swisschain.Sdk.Metrics
 {
-    public class GaugeExtensions
+    public static class GaugeExtensions
     {
-        
+        public static MillisecondsTimer NewMillisecondsTimer(this Gauge gauge, params string[] labels)
+            => new MillisecondsTimer(gauge, labels);
     }
 }

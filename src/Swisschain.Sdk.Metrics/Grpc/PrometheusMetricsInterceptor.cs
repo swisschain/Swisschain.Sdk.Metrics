@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
@@ -61,7 +62,8 @@ namespace Swisschain.Sdk.Metrics.Grpc
 
         static PrometheusMetricsInterceptor()
         {
-            HostName = Environment.GetEnvironmentVariable("HOST");
+            var defaultName = Assembly.GetEntryAssembly()?.FullName ?? "unknown";
+            HostName = Environment.GetEnvironmentVariable("HOST") ?? defaultName;
         }
 
         public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request,

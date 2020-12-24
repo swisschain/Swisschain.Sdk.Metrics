@@ -62,7 +62,7 @@ namespace Swisschain.Sdk.Metrics.Grpc
 
         static PrometheusMetricsInterceptor()
         {
-            var defaultName = Assembly.GetEntryAssembly()?.FullName ?? "unknown";
+            var defaultName = Assembly.GetEntryAssembly()?.GetName().Name ?? "unknown";
             HostName = Environment.GetEnvironmentVariable("HOST") ?? defaultName;
         }
 

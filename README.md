@@ -48,16 +48,6 @@ InternalMetrics.QuoteInCount.WithLabels(Venue, symbol).Inc();
 
 ```
 
-timer usage
-
-```
- using (InternalMetrics.HedgeOrderProcessMilliseconds.NewMillisecondsTimer(venueSettings.Instrument))
- {
- 	 // ....
- }
-```
-
-
 # Grpc service traker
 
 ```
@@ -74,5 +64,19 @@ timer usage
 		    options.Interceptors.Add<PrometheusMetricsInterceptor>();
 		}
 	}
+
+```
+
+# Grpc client traker
+
+```
+
+using var grpcChannel = GrpcChannel.ForAddress(serverGrpcUrl);
+
+var invoker = _grpcChannel.Intercept(new ClientLoggerInterceptor());
+
+var monitoringClient = new Monitoring.MonitoringClient(invoker);
+
+var responce = await monitoringClient.IsAliveAsync(new IsAliveRequest());
 
 ```

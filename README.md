@@ -73,7 +73,7 @@ InternalMetrics.QuoteInCount.WithLabels(Venue, symbol).Inc();
 
 using var grpcChannel = GrpcChannel.ForAddress(serverGrpcUrl);
 
-var invoker = _grpcChannel.Intercept(new ClientLoggerInterceptor());
+var invoker = _grpcChannel.Intercept(new PrometheusMetricsInterceptor());
 
 var monitoringClient = new Monitoring.MonitoringClient(invoker);
 

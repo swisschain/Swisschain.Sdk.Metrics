@@ -53,10 +53,12 @@ namespace Swisschain.Sdk.Metrics.Rest
 
         public async Task Invoke(HttpContext context)
         {
-            var path = context.Request.Path.ToString();
+            var path = context.Request?.Path.ToString() ?? "unknown";
+            var lpath = path.ToLower();
 
             // skip isalive method from statistic
-            if (path.ToLower().Contains("isalive"))
+            
+            if (lpath.Contains("isalive") || lpath.Contains("metrics") || lpath.Contains("swagger"))
             {
                 await _next.Invoke(context);
                 return;

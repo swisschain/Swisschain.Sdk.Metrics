@@ -80,3 +80,20 @@ var monitoringClient = new Monitoring.MonitoringClient(invoker);
 var responce = await monitoringClient.IsAliveAsync(new IsAliveRequest());
 
 ```
+
+# Http service traker
+
+```csharp
+	public sealed class Startup : SwisschainStartup<AppConfig>
+	{
+		public Startup(IConfiguration configuration)
+		    : base(configuration)
+		{
+		}
+
+		protected override void ConfigureExt(IApplicationBuilder app, IWebHostEnvironment env)
+		{
+			UseMiddleware<PrometheusMetricsMiddleware>();
+		}
+	}
+```

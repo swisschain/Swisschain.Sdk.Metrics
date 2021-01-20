@@ -93,7 +93,7 @@ var responce = await monitoringClient.IsAliveAsync(new IsAliveRequest());
 
 		protected override void ConfigureExt(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			UseMiddleware<PrometheusMetricsMiddleware>();
+			app.UseMiddleware<PrometheusMetricsMiddleware>();
 		}
 	}
 ```
